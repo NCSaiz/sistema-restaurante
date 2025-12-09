@@ -54,31 +54,33 @@ function UsersPage() {
   };
 
   return (
-    <div className="text-white relative">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-2xl font-bold">Gestión de Usuarios</h1>
-          <p className="text-gray-400">Administra el personal del restaurante</p>
-        </div>
+    <div className="text-gray-900" style={{ minHeight: '100vh', padding: '2rem' }}>
+      <div style={{ backgroundColor: 'white', borderRadius: '1rem', padding: '2rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Gestión de Usuarios</h1>
+            <p className="text-gray-600">Administra el personal del restaurante</p>
+          </div>
         
         {/* 2. MODIFICACIÓN: Limpiar el usuario al crear uno nuevo */}
         <button 
           onClick={() => { 
-            setUserToEdit(null); // <--- IMPORTANTE: Limpiamos para que el modal sepa que es CREAR
+            setUserToEdit(null);
             setShowModal(true); 
           }} 
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          className="text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          style={{ backgroundColor: '#9B6BA8' }}
         >
           <Plus className="w-5 h-5" />
           Nuevo Usuario
         </button>
       </div>
 
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden shadow-xl">
+      <div className="rounded-xl border overflow-hidden shadow-xl" style={{ borderColor: '#e0e0e0', backgroundColor: 'white' }}>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="bg-gray-700/50 text-gray-400 text-sm uppercase">
+              <tr style={{ backgroundColor: '#f5f5f5', color: '#666666' }} className="text-sm uppercase">
                 <th className="px-6 py-4">Nombre</th>
                 <th className="px-6 py-4">Rol</th>
                 <th className="px-6 py-4">Email</th>
@@ -86,51 +88,56 @@ function UsersPage() {
                 <th className="px-6 py-4 text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-700">
+            <tbody className="divide-y" style={{ borderColor: '#e0e0e0' }}>
               {loading ? (
-                <tr><td colSpan="5" className="text-center py-8">Cargando...</td></tr>
+                <tr><td colSpan="5" className="text-center py-8 text-gray-600">Cargando...</td></tr>
               ) : (
                 users.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-700/30 transition-colors">
+                  <tr key={user.id} className="hover:bg-gray-50 transition-colors" style={{ color: '#333333' }}>
                     <td className="px-6 py-4 font-medium flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-bold border border-indigo-500/30">
+                      <div className="w-8 h-8 rounded-full text-white flex items-center justify-center text-xs font-bold border" style={{ backgroundColor: '#9B6BA8', borderColor: '#9B6BA8' }}>
                         {user.nombre.charAt(0)}
                       </div>
                       {user.nombre}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-2 py-1 rounded text-xs font-medium border ${
-                        user.rol === 'ADMIN' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                        user.rol === 'COCINA' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
-                        'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                        user.rol === 'ADMIN' ? 'bg-purple-100 text-purple-800 border-purple-300' :
+                        user.rol === 'COCINA' ? 'bg-orange-100 text-orange-800 border-orange-300' :
+                        'bg-blue-100 text-blue-800 border-blue-300'
                       }`}>
                         {user.rol}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-gray-400 text-sm">{user.email}</td>
+                    <td className="px-6 py-4 text-gray-700 text-sm">{user.email}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <span className={`w-2 h-2 rounded-full ${user.activo ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-red-500'}`}></span>
-                        <span className="text-sm text-gray-300">{user.activo ? 'Activo' : 'Inactivo'}</span>
+                        <span className="text-sm text-gray-700">{user.activo ? 'Activo' : 'Inactivo'}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">
                         
-                        {/* 3. MODIFICACIÓN: Conectar el botón editar */}
                         <button 
                           onClick={() => {
-                            setUserToEdit(user); // <--- GUARDAMOS EL USUARIO CLICKADO
-                            setShowModal(true);  // <--- ABRIMOS EL MODAL
+                            setUserToEdit(user);
+                            setShowModal(true);
                           }}
-                          className="p-2 hover:bg-gray-600 rounded-lg text-gray-400 hover:text-white transition"
+                          className="p-2 rounded-lg text-gray-700 transition"
+                          style={{ backgroundColor: '#f0f0f0', color: '#666666' }}
+                          onMouseEnter={(e) => e.target.style.backgroundColor = '#e0e0e0'}
+                          onMouseLeave={(e) => e.target.style.backgroundColor = '#f0f0f0'}
                         >
                           <Edit className="w-4 h-4" />
                         </button>
 
                         <button 
                             onClick={() => handleDelete(user.id, user.nombre)}
-                            className="p-2 hover:bg-red-500/20 rounded-lg text-red-400 hover:text-red-300 transition"
+                            className="p-2 rounded-lg text-red-600 transition"
+                            style={{ backgroundColor: '#ffe0e0' }}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#ffc0c0'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = '#ffe0e0'}
                             >
                             <Trash2 className="w-4 h-4" />
                         </button>
@@ -143,14 +150,20 @@ function UsersPage() {
           </table>
         </div>
       </div>
+      </div>
 
       {showModal && (
         <CreateUserModal 
-          onClose={() => setShowModal(false)} 
+          onClose={() => {
+            setShowModal(false);
+            setUserToEdit(null);
+          }} 
           onSuccess={() => {
-            fetchUsers(); 
+            fetchUsers();
+            setShowModal(false);
+            setUserToEdit(null);
           }}
-          userToEdit={userToEdit} // <--- 4. MODIFICACIÓN: Pasamos la prop al hijo
+          userToEdit={userToEdit}
         />
       )}
     </div>

@@ -1,21 +1,21 @@
 import Swal from 'sweetalert2';
 
-// Configuración base para modo oscuro (Dark Mode)
-const darkOptions = {
-  background: '#1f2937', // bg-gray-800
-  color: '#fff',
-  confirmButtonColor: '#4f46e5', // indigo-600
-  cancelButtonColor: '#ef4444', // red-500
-  iconColor: '#f87171', // red-400
+// Configuración base para modo claro (Light Mode)
+const lightOptions = {
+  background: 'white',
+  color: '#333333',
+  confirmButtonColor: '#9B6BA8', // Púrpura del dashboard
+  cancelButtonColor: '#EF4444', // Rojo suave pero visible
+  iconColor: '#EF4444', // Rojo para alertas
   customClass: {
-    popup: 'border border-gray-700 rounded-xl shadow-2xl'
+    popup: 'border-2 border-gray-300 rounded-xl shadow-lg'
   }
 };
 
 // 1. CONFIRMACIÓN (Pregunta de Sí/No)
 export const askConfirmation = async (titulo, texto, textoBoton = 'Sí, continuar') => {
   const result = await Swal.fire({
-    ...darkOptions,
+    ...lightOptions,
     title: titulo,
     text: texto,
     icon: 'warning',
@@ -31,11 +31,11 @@ export const askConfirmation = async (titulo, texto, textoBoton = 'Sí, continua
 // 2. ÉXITO (Notificación verde)
 export const showSuccess = (titulo) => {
   Swal.fire({
-    ...darkOptions,
+    ...lightOptions,
     icon: 'success',
     title: titulo,
-    iconColor: '#4ade80', // green-400
-    confirmButtonColor: '#10b981', // green-500
+    iconColor: '#22C55E', // green-500
+    confirmButtonColor: '#16A34A', // green-600
     timer: 2000,
     showConfirmButton: false
   });
@@ -44,10 +44,11 @@ export const showSuccess = (titulo) => {
 // 3. ERROR (Notificación roja)
 export const showError = (titulo, texto) => {
   Swal.fire({
-    ...darkOptions,
+    ...lightOptions,
     icon: 'error',
     title: titulo,
     text: texto,
-    confirmButtonText: 'Entendido'
+    confirmButtonText: 'Entendido',
+    confirmButtonColor: '#EF4444'
   });
 };

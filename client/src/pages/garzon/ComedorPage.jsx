@@ -52,75 +52,106 @@ function ComedorPage() {
   };
 
   return (
-    // 1. SCROLL FIX: h-full y overflow
-    <div className="h-full overflow-y-auto bg-gray-900 p-4">
+    // IMPORTANTE: h-full y overflow-y-auto activan el scroll dentro del layout fijo
+    <div className="h-full overflow-y-auto p-4" style={{ backgroundColor: '#f9f5f1' }}>
       
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-          <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
-            <Store className="w-6 h-6" />
-          </div>
-          Mapa del Comedor
-        </h2>
+      <div className="max-w-7xl mx-auto">
         
-        {/* 2. GRID RESPONSIVO (Igual que en Mis Mesas) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 pb-20">
-          {mesas.map((mesa) => {
+        {/* Header con título y emoji */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3" style={{ color: '#111827' }}>
+            <div className="p-2 rounded-lg" style={{ backgroundColor: '#A62858' }}>
+              <Store className="w-6 h-6 text-white" />
+            </div>
+            Mapa del Comedor
+          </h2>
+        </div>
+        
+        {/* Grid de Mesas con distribución personalizada */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(6, 1fr)',
+          gridTemplateRows: 'repeat(4, minmax(120px, auto))',
+          gap: '1rem'
+        }}>
+          {mesas.map((mesa, index) => {
             const esMia = mesa.usuarioId === user.id;
             const esLibre = mesa.estado === 'libre';
             const ocupadaPorOtro = !esLibre && !esMia;
+
+            // Distribución personalizada según posición
+            let gridColumn = 'auto';
+            let gridRow = 'auto';
+            
+            // Columna izquierda (índices 0, 1, 2, 3)
+            if (index === 0) { gridColumn = '1 / 2'; gridRow = '1 / 2'; }
+            if (index === 1) { gridColumn = '1 / 2'; gridRow = '2 / 3'; }
+            if (index === 2) { gridColumn = '1 / 2'; gridRow = '3 / 4'; }
+            if (index === 3) { gridColumn = '1 / 2'; gridRow = '4 / 5'; }
+            
+            // Centro (índices 4, 5, 6)
+            if (index === 4) { gridColumn = '3 / 4'; gridRow = '1 / 2'; }
+            if (index === 5) { gridColumn = '3 / 4'; gridRow = '2 / 3'; }
+            if (index === 6) { gridColumn = '3 / 4'; gridRow = '3 / 4'; }
+            
+            // Centro derecha (índice 7)
+            if (index === 7) { gridColumn = '3 / 4'; gridRow = '4 / 5'; }
+            
+            // Derecha (índices 8, 9, 10)
+            if (index === 8) { gridColumn = '5 / 7'; gridRow = '1 / 2'; }
+            if (index === 9) { gridColumn = '5 / 7'; gridRow = '2 / 3'; }
+            if (index === 10) { gridColumn = '5 / 7'; gridRow = '3 / 4'; }
+            
+            // Si hay más mesas, se adaptan al siguiente conjunto
+            if (index > 10) {
+              const posInNext = (index - 11) % 4;
+              const setNum = Math.floor((index - 11) / 4);
+              if (setNum === 0) {
+                if (posInNext === 0) { gridColumn = '1 / 2'; gridRow = '5 / 6'; }
+                if (posInNext === 1) { gridColumn = '3 / 4'; gridRow = '5 / 6'; }
+                if (posInNext === 2) { gridColumn = '5 / 7'; gridRow = '4 / 5'; }
+              }
+            }
 
             return (
               <button
                 key={mesa.id}
                 onClick={() => handleOcupar(mesa)}
                 disabled={!esLibre}
-                className={`group relative rounded-2xl p-5 border transition-all text-left shadow-lg
-                  ${esLibre 
-                    ? 'bg-gray-800 border-green-500/30 hover:border-green-400 hover:bg-gray-750 cursor-pointer active:scale-[0.98]' 
-                    : ''}
-                  ${esMia 
-                    ? 'bg-indigo-900/10 border-indigo-500/50 cursor-default' 
-                    : ''}
-                  ${ocupadaPorOtro 
-                    ? 'bg-gray-800/50 border-red-500/10 opacity-60 cursor-not-allowed grayscale-[0.5]' 
-                    : ''}
-                `}
-              >
+                className="p-4 rounded-xl border-2 transition shadow-lg relative group text-left"
+                style={{ 
+                  backgroundColor: 'white',
+                  borderColor: esLibre ? '#22C55E' : esMia ? '#A62858' : '#d0d0d0',
+                  opacity: ocupadaPorOtro ? 0.6 : 1,
+                  cursor: esLibre ? 'pointer' : (esMia ? 'pointer' : 'not-allowed'),
+                  gridColumn,
+                  gridRow
+                }}>
+                
                 {/* Cabecera Tarjeta */}
-                <div className="flex justify-between items-start mb-3">
-                  <div className={`p-3 rounded-xl transition-colors ${
-                      esLibre ? 'bg-green-500/20 text-green-400 group-hover:bg-green-500 group-hover:text-white' :
-                      esMia ? 'bg-indigo-500/20 text-indigo-400' :
-                      'bg-red-500/10 text-red-400'
-                  }`}>
-                    {esLibre ? <Coffee className="w-6 h-6" /> : esMia ? <CheckCircle2 className="w-6 h-6"/> : <Lock className="w-6 h-6"/>}
+                <div className="flex justify-between items-start mb-2">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" 
+                    style={{ backgroundColor: esLibre ? '#22C55E' : esMia ? '#A62858' : '#9B6BA8' }}>
+                    <Coffee className="w-5 h-5" />
                   </div>
-
-                  {/* Badge de Estado */}
-                  <span className={`text-[10px] uppercase font-bold px-2 py-1 rounded-full border ${
-                     esLibre ? 'bg-green-500/10 text-green-400 border-green-500/20' :
-                     esMia ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
-                     'bg-red-500/10 text-red-500 border-red-500/20'
+                  <span className={`text-xs px-2 py-1 rounded-full border font-bold ${
+                     esLibre ? 'bg-green-100 text-green-800 border-green-300' :
+                     esMia ? 'bg-red-100 text-red-800 border-red-300' :
+                     'bg-gray-100 text-gray-800 border-gray-300'
                   }`}>
                     {esLibre ? 'DISPONIBLE' : esMia ? 'TUYA' : 'OCUPADA'}
                   </span>
                 </div>
 
-                <div className="mt-2">
-                  <h3 className={`text-2xl font-bold ${esLibre ? 'text-white' : 'text-gray-300'}`}>
-                    {mesa.numero}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-1 text-gray-400 text-sm">
-                    <Users className="w-4 h-4" />
-                    <span>{mesa.capacidad} Personas</span>
-                  </div>
-                </div>
+                {/* Info */}
+                <h3 className="text-xl font-bold text-gray-900 mb-1">Mesa {mesa.numero}</h3>
+                <p className="text-sm text-gray-600">Capacidad: {mesa.capacidad} personas</p>
 
-                {/* Decoración Hover (Solo si es libre) */}
-                {esLibre && (
-                  <div className="absolute bottom-0 left-0 w-full h-1 bg-green-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-2xl" />
-                )}
+                {/* Barra de animación al pasar el cursor */}
+                <div className="absolute bottom-0 left-0 w-full h-1 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-xl" 
+                  style={{
+                    backgroundColor: esLibre ? '#22C55E' : esMia ? '#A62858' : '#d0d0d0'
+                  }} />
               </button>
             );
           })}

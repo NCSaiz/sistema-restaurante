@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { useAuthStore } from '../store/authStore';
+import backgroundGeneral from '../assets/backgroundgeneral.png';
 
 function AdminLayout() {
   const { isAuth, user } = useAuthStore();
@@ -12,7 +13,12 @@ function AdminLayout() {
   if (user.rol !== 'ADMIN') return <Navigate to="/login" />;
 
   return (
-    <div className="min-h-screen bg-gray-900 flex">
+    <div className="min-h-screen flex" style={{
+      backgroundImage: `url(${backgroundGeneral})`,
+      backgroundSize: '50%',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed'
+    }}>
       {/* Sidebar fijo */}
       <Sidebar />
 

@@ -63,43 +63,43 @@ const handleClose = async () => {
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 border border-gray-700 rounded-xl shadow-2xl w-full max-w-sm animate-fade-in">
+      <div className="bg-white border border-gray-300 rounded-xl shadow-2xl w-full max-w-sm animate-fade-in">
         
-        <div className="flex justify-between items-center p-4 border-b border-gray-700 bg-gray-900/50">
-          <h2 className="text-lg font-bold text-white">
+        <div className="flex justify-between items-center p-4 border-b-2 border-gray-300 bg-gray-50">
+          <h2 className="text-lg font-bold text-gray-900">
             {mesaToEdit ? 'Editar Mesa' : 'Nueva Mesa'}
           </h2>
 
-            <button onClick={handleClose} className="text-gray-400 hover:text-white transition">
+            <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 transition">
                 <X className="w-5 h-5" />
             </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {error && <div className="text-red-500 text-sm bg-red-500/10 p-2 rounded">{error}</div>}
+          {error && <div className="text-red-600 text-sm bg-red-50 p-3 rounded border border-red-200">{error}</div>}
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Número / Identificador</label>
+            <label className="block text-sm text-gray-900 font-medium mb-2">Número / Identificador</label>
             <input type="text" name="numero" required value={formData.numero} onChange={handleChange}
               placeholder="Ej: M-15"
-              className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white focus:ring-2 focus:ring-indigo-500 outline-none" />
+              className="w-full bg-gray-100 border-2 border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition" />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Capacidad (Personas)</label>
+            <label className="block text-sm text-gray-900 font-medium mb-2">Capacidad (Personas)</label>
             <input type="number" name="capacidad" required min="1" value={formData.capacidad} onChange={handleChange}
-              className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white focus:ring-2 focus:ring-indigo-500 outline-none" />
+              className="w-full bg-gray-100 border-2 border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition" />
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
             <button
                 type="button"
                 onClick={handleClose}
-                className="px-4 py-2 text-gray-300 hover:text-white transition"
+                className="px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition rounded-lg"
                 >
                 Cancelar
             </button>
-            <button type="submit" disabled={loading} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+            <button type="submit" disabled={loading} className="text-white px-4 py-2 rounded-lg flex items-center gap-2 transition disabled:opacity-50" style={{backgroundColor: '#9B6BA8'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#8B5A98'} onMouseLeave={(e) => e.target.style.backgroundColor = '#9B6BA8'}>
                {loading ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                Guardar
             </button>
