@@ -95,20 +95,19 @@ function CocinaPage() {
   );
 
   return (
-    <div className="text-gray-900" style={{ minHeight: '100vh', padding: '2rem' }}>
-      <div style={{ backgroundColor: 'white', borderRadius: '1rem', padding: '2rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">Cocina - En Vivo</h1>
+    <div className="text-gray-900 h-full overflow-hidden" style={{ minHeight: '100vh', padding: '1rem' }}>
+      <div style={{ backgroundColor: 'white', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', height: '100%', display: 'flex', flexDirection: 'column' }}>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-4 flex-1" style={{ minHeight: '0' }}>
           {/* COLUMNA 1: PENDIENTES */}
-          <div className="flex flex-col rounded-2xl border-2 overflow-hidden shadow-lg" style={{ backgroundColor: 'rgba(247, 201, 72, 0.15)', borderColor: '#F7C948' }}>
+          <div className="flex flex-col rounded-2xl border-2 overflow-hidden shadow-lg" style={{ backgroundColor: 'white', borderColor: '#F7C948' }}>
             <div className="p-4 border-b flex justify-between items-center" style={{ backgroundColor: 'rgba(247, 201, 72, 0.2)', borderColor: '#F7C948' }}>
               <h2 className="font-bold text-lg flex items-center gap-2" style={{ color: '#3a2256' }}>
                 <Clock className="w-5 h-5" /> EN COLA
               </h2>
               <span className="font-bold px-3 py-1 rounded-full text-sm text-white" style={{ backgroundColor: '#F7C948' }}>{pendientes.length}</span>
             </div>
-            <div className="flex-1 overflow-y-auto p-4" style={{ minHeight: '500px' }}>
+            <div className="flex-1 overflow-y-auto p-3" style={{ backgroundColor: 'white' }}>
               {pendientes.length === 0 ? (
                 <p className="text-center text-gray-500 mt-10">Sin pedidos en cola</p>
               ) : (
@@ -130,14 +129,14 @@ function CocinaPage() {
           </div>
 
           {/* COLUMNA 2: EN PREPARACIÓN */}
-          <div className="flex flex-col rounded-2xl border-2 overflow-hidden shadow-lg" style={{ backgroundColor: 'rgba(241, 153, 61, 0.15)', borderColor: '#F1993d' }}>
+          <div className="flex flex-col rounded-2xl border-2 overflow-hidden shadow-lg" style={{ backgroundColor: 'white', borderColor: '#F1993d' }}>
             <div className="p-4 border-b flex justify-between items-center" style={{ backgroundColor: 'rgba(241, 153, 61, 0.2)', borderColor: '#F1993d' }}>
               <h2 className="font-bold text-lg flex items-center gap-2" style={{ color: '#3a2256' }}>
                 <Flame className="w-5 h-5" /> COCINANDO
               </h2>
               <span className="font-bold px-3 py-1 rounded-full text-sm text-white" style={{ backgroundColor: '#F1993d' }}>{cocinando.length}</span>
             </div>
-            <div className="flex-1 overflow-y-auto p-4" style={{ minHeight: '500px' }}>
+            <div className="flex-1 overflow-y-auto p-3" style={{ backgroundColor: 'white' }}>
               {cocinando.length === 0 ? (
                 <p className="text-center text-gray-500 mt-10">Sin pedidos en preparación</p>
               ) : (
@@ -160,14 +159,14 @@ function CocinaPage() {
           </div>
 
           {/* COLUMNA 3: LISTOS (Esperando retiro) */}
-          <div className="flex flex-col rounded-2xl border-2 overflow-hidden shadow-lg" style={{ backgroundColor: 'rgba(34, 197, 94, 0.15)', borderColor: '#22C55E' }}>
+          <div className="flex flex-col rounded-2xl border-2 overflow-hidden shadow-lg" style={{ backgroundColor: 'white', borderColor: '#22C55E' }}>
             <div className="p-4 border-b flex justify-between items-center" style={{ backgroundColor: 'rgba(34, 197, 94, 0.2)', borderColor: '#22C55E' }}>
               <h2 className="font-bold text-lg flex items-center gap-2" style={{ color: '#3a2256' }}>
                 <BellRing className="w-5 h-5" /> PARA RETIRO
               </h2>
               <span className="font-bold px-3 py-1 rounded-full text-sm text-white" style={{ backgroundColor: '#22C55E' }}>{listos.length}</span>
             </div>
-            <div className="flex-1 overflow-y-auto p-4" style={{ minHeight: '500px' }}>
+            <div className="flex-1 overflow-y-auto p-3" style={{ backgroundColor: 'white' }}>
               {listos.length === 0 ? (
                 <p className="text-center text-gray-500 mt-10">Todos los pedidos entregados 👍</p>
               ) : (

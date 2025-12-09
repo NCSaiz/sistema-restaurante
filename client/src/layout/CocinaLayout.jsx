@@ -51,15 +51,15 @@ function CocinaLayout() {
       <header className="border-b border-gray-700 px-6 py-2 flex justify-between items-center shrink-0" style={{ backgroundColor: '#A62858' }}>
         <div className="flex items-center gap-3">
           <img src={logo} alt="Buen Sabor" className="w-16 h-16" />
-          <div className="bg-orange-500/20 p-2 rounded-lg">
-            <ChefHat className="w-8 h-8 text-orange-500" />
+          <div className="bg-white/20 p-2 rounded-lg">
+            <ChefHat className="w-8 h-8 text-white" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white tracking-wide">MONITOR DE COCINA</h1>
-            <p className="text-xs text-gray-400 font-medium">Jefe de Cocina: {user.nombre}</p>
+            <p className="text-xs text-white font-medium">Jefe de Cocina: {user.nombre}</p>
           </div>
         </div>
-        <button onClick={handleLogout} className="bg-red-400/30 hover:bg-red-400/50 text-red-200 px-4 py-2 rounded-lg flex items-center gap-2 transition">
+        <button onClick={handleLogout} className="bg-red-400/30 hover:bg-red-400/50 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
           <LogOut className="w-5 h-5" />
           <span className="font-bold">SALIR</span>
         </button>
